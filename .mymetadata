@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="RoleManage"
+  id="myeclipse.1415714420031"
+  context-root="/RoleManage"
+  j2ee-spec="5.0"
+  archive="RoleManage.war">
+  <attributes>
+    <attribute name="webrootdir" value="/WebRoot" />
+  </attributes>
+</project-module>
+

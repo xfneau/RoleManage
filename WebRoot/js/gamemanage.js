@@ -1,0 +1,78 @@
+manage = {
+		
+	init : function(){
+		$("#newgame").hide();
+		$("div[name='gameinfo']").hide();
+		$("#gamer").attr("class","active");
+	},
+	editgame : function(id){
+		if( id!=null ){
+			var gamename=$("#gamename"+id).val();
+			var gameimg=$("#gameimg"+id).val();
+			var gamelevel=$("#gamelevel"+id+" option:selected").val();
+			var gamealias=$("#gamealias"+id).val();
+			if( gamename=="" || gameimg=="" || gamelevel=="" ){
+				alert("请填写完整");
+				return;
+			}
+			var url="ajax/editgame";
+			$.post(url,{"gameid":id,"gamename":gamename,"gameimg":gameimg,"gamelevel":gamelevel,"gamealias":gamealias},function(jsonStr){
+				var obj = eval('('+jsonStr+')');
+				if( obj.id==-1 || obj.id==null ){
+					alert("修改失败");
+				}
+				window.location.href="gamemanage";
+			});
+		}
+	},
+	edit : function(id){
+		if( id!=null ){
+			var l = $("#gamelevel_"+id).val();
+			$("#gamelevel"+id).val(l);
+			$(".bigDiv").show();
+			$(".bigDiv").height($(document).height()).width($(document).width());
+			$("div[id='"+id+"']").show();
+		}
+	},
+	
+	dele : function(id){
+		if(id!=null){
+			//alert("111");
+			if( confirm("是否确定删除") ){
+				var url="delegame?gameid="+id;
+				window.location.href=url;
+			}
+		}
+	},
+	
+	cancel : function(title){
+		$("#"+title).hide();
+		$(".bigDiv").hide();
+	},
+	
+	shownewgame : function(){
+		$("#newgame").show();
+		$(".bigDiv").show();
+		$(".bigDiv").height($(document).height()).width($(document).width());
+	},
+	newgame : function(){
+		var gamename=$("#gamename").val();
+		var gameimg=$("#gameimg").val();
+		var gamelevel=$("#gamelevel option:selected").val();
+		var gamealias=$("#gamealias").val();
+		if( gamename=="" || gameimg=="" || gamelevel=="" || gamealias=="" ){
+			alert("请填写完整");
+			return;
+		}
+		var url="ajax/newgame";
+		$.post(url,{"gamename":gamename,"gameimg":gameimg,"gamelevel":gamelevel,"gamealias":gamealias},function(jsonStr){
+			var obj =eval('('+jsonStr+')');
+			if( obj.id==0 || obj.id==null ){
+				alert("创建失败");
+			}
+			window.location.href="gamemanage";
+		});
+	}
+	
+		
+};

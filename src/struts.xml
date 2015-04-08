@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<constant name="struts.devMode" value="false" />
+	<package name="default" extends="struts-default">
+		<interceptors>
+			<interceptor name="securitynochannel" class="com.hoolai.Action.SecurityInterceptor" />
+			<interceptor-stack name="SecurityStack">
+				<interceptor-ref name="securitynochannel" />
+				<interceptor-ref name="defaultStack" />
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="SecurityStack"></default-interceptor-ref>
+		<global-results>
+			<result name="login" type="redirect">/</result>
+		</global-results>
+
+		<action name="hello" class="com.hoolai.Action.HelloAction">
+			<result name="success" type="redirect">
+				groupmanage
+			</result>
+			<result name="login" type="redirect">
+				/
+			</result>
+		</action>
+
+		<action name="groupmanage" class="com.hoolai.Action.GroupAction">
+			<result name="success" type="freemarker">
+				/WEB-INF/freemarker/groupManage.ftl
+			</result>
+		</action>
+
+		<action name="usermanage" class="com.hoolai.Action.UserAction">
+			<result name="success" type="freemarker">
+				/WEB-INF/freemarker/userManage.ftl
+			</result>
+		</action>
+
+		<action name="edit" class="com.hoolai.Action.GroupAction"
+			method="editGroup">
+			<result name="success" type="freemarker">
+				/WEB-INF/freemarker/groupEdit.ftl
+			</result>
+		</action>
+
+		<action name="edituser" class="com.hoolai.Action.UserAction"
+			method="editUser">
+			<result name="success" type="freemarker">
+				/WEB-INF/freemarker/userEdit.ftl
+			</result>
+		</action>
+
+		<action name="newuser" class="com.hoolai.Action.UserAction"
+			method="newUser">
+			<result name="success" type="freemarker">
+				/WEB-INF/freemarker/userEdit.ftl
+			</result>
+		</action>
+
+		<action name="deleuser" class="com.hoolai.Action.UserAction"
+			method="deleUser">
+			<result name="success" type="redirect">
+				usermanage
+			</result>
+		</action>
+
+
+		<action name="newgroup" class="com.hoolai.Action.GroupAction"
+			method="newGroup">
+			<result name="success" type="freemarker">
+				/WEB-INF/freemarker/groupEdit.ftl
+			</result>
+		</action>
+
+		<action name="buildgroup" class="com.hoolai.Action.GroupAction"
+			method="bulidgroup">
+			<result name="success" type="redirect">
+				groupmanage
+			</result>
+		</action>
+
+		<action name="dele" class="com.hoolai.Action.GroupAction"
+			method="deleGroup">
+			<result name="success" type="redirect">
+				groupmanage
+			</result>
+		</action>
+
+		<action name="delegame" class="com.hoolai.Action.GameAction"
+			method="deleteGame">
+			<result name="success" type="redirect">
+				gamemanage
+			</result>
+		</action>
+
+		<action name="gamemanage" class="com.hoolai.Action.GameAction">
+			<result name="success" type="freemarker">
+				/WEB-INF/freemarker/gamelist.ftl
+			</result>
+		</action>
+
+		<action name="snmanage" class="com.hoolai.Action.SNAction">
+			<result name="success" type="freemarker">
+				/WEB-INF/freemarker/snlist.ftl
+			</result>
+		</action>
+
+		<action name="delesn" class="com.hoolai.Action.SNAction"
+			method="deleteSn">
+			<result name="success" type="redirect">
+				snmanage
+			</result>
+		</action>
+
+		<action name="queryreport" class="com.hoolai.Action.ReportingHistoryAction">
+			<result name="success" type="freemarker">
+				/WEB-INF/freemarker/reportingHistory.ftl
+			</result>
+		</action>
+
+		<action name="getQueryList" class="com.hoolai.Action.ReportingHistoryAction"
+			method="getQueryList">
+			<result name="success" type="freemarker">
+				/WEB-INF/freemarker/reportingHistory.ftl
+			</result>
+		</action>
+
+	</package>
+
+
+
+	<package name="groupmanageajax" extends="json-default"
+		namespace="/ajax">
+
+		<interceptors>
+			<interceptor name="securitynochannel" class="com.hoolai.Action.SecurityInterceptor" />
+			<interceptor-stack name="SecurityStack">
+				<interceptor-ref name="securitynochannel" />
+				<interceptor-ref name="defaultStack" />
+			</interceptor-stack>
+		</interceptors>
+
+		<default-interceptor-ref name="SecurityStack"></default-interceptor-ref>
+
+		<global-results>
+			<result name="login" type="redirect">/</result>
+		</global-results>
+
+		<action name="buildgroup" class="com.hoolai.Action.GroupAction"
+			method="bulidGroup">
+			<result name="success" type="json">
+				<param name="root">jsonStr</param>
+			</result>
+		</action>
+
+		<action name="updategroup" class="com.hoolai.Action.GroupAction"
+			method="updateGroup">
+			<result name="success" type="json">
+				<param name="root">jsonStr</param>
+			</result>
+		</action>
+
+		<action name="builduser" class="com.hoolai.Action.UserAction"
+			method="bulidUser">
+			<result name="success" type="json">
+				<param name="root">jsonStr</param>
+			</result>
+		</action>
+
+		<action name="updateuser" class="com.hoolai.Action.UserAction"
+			method="updateUser">
+			<result name="success" type="json">
+				<param name="root">jsonStr</param>
+			</result>
+		</action>
+
+		<action name="newgame" class="com.hoolai.Action.GameAction"
+			method="newGame">
+			<result name="success" type="json">
+				<param name="root">jsonStr</param>
+			</result>
+		</action>
+
+		<action name="editgame" class="com.hoolai.Action.GameAction"
+			method="editGame">
+			<result name="success" type="json">
+				<param name="root">jsonStr</param>
+			</result>
+		</action>
+
+		<action name="newsn" class="com.hoolai.Action.SNAction" method="newSn">
+			<result name="success" type="json">
+				<param name="root">jsonStr</param>
+			</result>
+		</action>
+
+		<action name="editsn" class="com.hoolai.Action.SNAction"
+			method="editSn">
+			<result name="success" type="json">
+				<param name="root">jsonStr</param>
+			</result>
+		</action>
+
+		<action name="deleteReportHistory" class="com.hoolai.Action.ReportingHistoryAction"
+			method="deleteReportHistory">
+			<result name="success" type="json">
+				<param name="root">jsonStr</param>
+			</result>
+		</action>
+
+	</package>
+
+	<package name="test" extends="struts-default">
+		<action name="test" class="com.hoolai.Action.TestAction">
+			<result name="success" type="freemarker">
+				/WEB-INF/freemarker/test.ftl
+			</result>
+		</action>
+	</package>
+</struts>
